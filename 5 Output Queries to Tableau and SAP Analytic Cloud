@@ -41,3 +41,16 @@ psftp: open 129.150.64.74
 login as: kdelat15
 ls
 get top_body_city.csv
+
+
+insert overwrite directory '/user/kdelat15/usedcars/'
+row format delimited fields terminated by ','
+SELECT sp_id, sp_name, AVG(savings_amount) AS Average_Savings FROM usedcartestfinal
+GROUP BY sp_id, sp_name
+ORDER BY Average_Savings DESC
+LIMIT 1000;
+
+$ hdfs dfs -get usedcars/000000_0 avg_savings.csv
+psftp: open kdelat15@129.150.64.74
+ls
+get avg_savings.csv

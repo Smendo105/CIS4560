@@ -23,3 +23,7 @@ GROUP BY sp_id, sp_name
 ORDER BY Average_Savings DESC
 LIMIT 1000;
 
+
+SELECT year, ROUND(AVG(mileage),0) AS average_mileage from usedcartestfinal GROUP BY year ORDER BY average_mileage;
+SELECT make_name, ROUND(AVG(price),0) AS average_price FROM usedcartestfinal GROUP BY make_name ORDER BY average_price DESC LIMIT 1000;
+SELECT year, ROUND(AVG(price),0) AS average_price_year FROM usedcartestfinal GROUP BY year ORDER BY year ASC;

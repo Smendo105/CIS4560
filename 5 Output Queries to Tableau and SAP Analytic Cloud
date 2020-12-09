@@ -54,3 +54,38 @@ $ hdfs dfs -get usedcars/000000_0 avg_savings.csv
 psftp: open kdelat15@129.150.64.74
 ls
 get avg_savings.csv
+
+
+
+insert overwrite directory '/user/kdelat15/'
+row format delimited fields terminated by ','
+
+SELECT year, ROUND(AVG(mileage),0) AS average_mileage 
+FROM usedcartestfinal 
+GROUP BY year 
+ORDER BY average_mileage;
+
+hdfs dfs -get 000000_0 miles
+
+pscp kdelat15@129.150.64.74:/home/kdelat15/miles miles.csv
+insert overwrite directory '/user/kdelat15/'
+row format delimited fields terminated by ','
+SELECT make_name, ROUND(AVG(price),0) AS average_price 
+FROM usedcartestfinal 
+GROUP BY make_name 
+ORDER BY average_price 
+DESC LIMIT 1000;
+
+hdfs dfs -get 000000_0 price
+
+pscp kdelat15@129.150.64.74:/home/kdelat15/price price.csv
+insert overwrite directory '/user/kdelat15/'
+row format delimited fields terminated by ','
+SELECT year, ROUND(AVG(price),0) AS average_price_year 
+FROM usedcartestfinal 
+GROUP BY year 
+ORDER BY year ASC;
+
+hdfs dfs -get 000000_0 price_by_year
+
+pscp kdelat15@129.150.64.74:/home/kdelat15/price_by_year price_by_year.csv
